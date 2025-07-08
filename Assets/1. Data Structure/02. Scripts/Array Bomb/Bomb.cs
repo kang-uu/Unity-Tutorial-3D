@@ -30,7 +30,7 @@ public class Bomb : MonoBehaviour
             Rigidbody rb = collider.GetComponent<Rigidbody>();
 
             // AddExplosionForce(폭발 파워, 폭발 위치, 폭발 범위, 폭발 높이)
-            rb.AddExplosionForce(100f, transform.position, bombRange, 1f);
+            rb.AddExplosionForce(300f, transform.position, bombRange, 1f);
         }
 
         Destroy(gameObject);
