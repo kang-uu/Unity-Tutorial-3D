@@ -23,6 +23,7 @@ public class Bomb : MonoBehaviour
 
     private void BombForce()
     {
+                                                                      // 감지 범위
         Collider[] colliders = Physics.OverlapSphere(transform.position, bombRange, layerMask);
 
         foreach (var collider in colliders)
