@@ -3,12 +3,7 @@ using UnityEngine;
 public class LocalData : MonoBehaviour
 {
     private int score;
-
-    void Start()
-    {
-        
-    }
-
+    
     void Update()
     {
         if (Input.GetMouseButtonDown(0))

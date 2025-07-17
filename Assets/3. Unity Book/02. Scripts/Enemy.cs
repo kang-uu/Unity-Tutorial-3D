@@ -31,20 +31,16 @@ public class Enemy : MonoBehaviour
     
     private void OnCollisionEnter(Collision other)
     {
-        // 점수 증가
-        GameObject smObject = GameObject.Find("ScoreManager");
-        ScoreManager sm = smObject.GetComponent<ScoreManager>();
-
-        // sm.SetScore(sm.GetScore() + 1); // 책에 적힌 거
-        var score = sm.GetScore() + 1;
-        sm.SetScore(score);
+        ScoreManager.Instance.Score++;
         
-        // 파티클 생성
         GameObject explosion = Instantiate(explosionFactory);
         explosion.transform.position = transform.position;
-        
-        // 파괴 기능
-        Destroy(other.gameObject);
-        Destroy(gameObject);
+
+        if (other.gameObject.name.Contains("Bullet"))
+            other.gameObject.SetActive(false); // 총알 오브젝트
+        else
+            Destroy(other.gameObject); // 플레이어 오브젝트
+
+        gameObject.SetActive(false);
     }
 }
