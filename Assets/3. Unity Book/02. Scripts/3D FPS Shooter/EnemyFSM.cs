@@ -12,6 +12,8 @@ public class EnemyFSM : MonoBehaviour
     private Transform player; // 타겟
     private CharacterController cc;
 
+    private Animator anim;
+
     public float findDistance = 8f; // 탐지 거리
     public float attackDistance = 3f; // 공격 가능 거리
     public float moveSpeed = 5f; // 이동 속도
@@ -33,6 +35,7 @@ public class EnemyFSM : MonoBehaviour
         player = GameObject.Find("Player").transform;
         cc = GetComponent<CharacterController>();
         originPos = transform.position;
+        anim = transform.GetComponentInChildren<Animator>();
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -69,6 +72,7 @@ public class EnemyFSM : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, player.position) < findDistance)
         {
+            anim.SetTrigger("IdleToMove");
             m_State = EnemyState.Move;
             Debug.Log("상태 전환 : Idle -> Move");
         }
@@ -85,6 +89,8 @@ public class EnemyFSM : MonoBehaviour
         {
             Vector3 dir = (player.position - transform.position).normalized;
             cc.Move(dir * moveSpeed * Time.deltaTime);
+            
+            transform.forward = dir; // 이동 방향을 정면으로 적용
         }
         else // 타겟이 공격 거리 내에 있는 경우 -> 공격 전환
         {
@@ -121,11 +127,13 @@ public class EnemyFSM : MonoBehaviour
         {
             Vector3 dir = (originPos - transform.position).normalized;
             cc.Move(dir * moveSpeed * Time.deltaTime);
+            transform.forward = dir;
         }
         else // 원래 위치 도착한 경우
         {
             transform.position = originPos;
             hp = 15;
+            anim.SetTrigger("MoveToIdle");
             m_State = EnemyState.Idle;
             Debug.Log("상태 전환 : Return -> Idle");
         }
