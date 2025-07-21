@@ -20,6 +20,9 @@ public class FPSPlayerFire : MonoBehaviour
 
     void Update()
     {
+        if (FPSGameManager.Instance.gState != FPSGameManager.GameState.Run)
+            return;
+        
         if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 버튼 클릭
         {
             Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);

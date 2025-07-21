@@ -28,6 +28,9 @@ public class FPSPlayerMove : MonoBehaviour
 
     void Update()
     {
+        if (FPSGameManager.Instance.gState != FPSGameManager.GameState.Run)
+            return;
+        
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
