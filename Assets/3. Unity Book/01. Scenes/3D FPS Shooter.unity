@@ -2335,9 +2335,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePosition: {fileID: 180683996}
   bombFactory: {fileID: 7298601802359779466, guid: 7aec201efa480844dbdd4c35daa490dd, type: 3}
+  bulletEffect: {fileID: 259128543}
   throwPower: 15
   weaponPower: 5
-  bulletEffect: {fileID: 259128543}
 --- !u!1 &444236495
 GameObject:
   m_ObjectHideFlags: 0
@@ -2949,8 +2949,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 750914758}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.65, z: 0.17}
+  m_LocalRotation: {x: -0.000000029802322, y: 0.000000029802322, z: 0.000000029802322, w: 1}
+  m_LocalPosition: {x: -0, y: 0.65, z: 0.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
