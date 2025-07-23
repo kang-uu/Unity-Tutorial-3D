@@ -45,7 +45,7 @@ public class AStar
 
                     neighborNode.nodeTotalCost = totalCost;
                     neighborNode.parent = node;
-                    neighborNode.estimateCost = totalCost + neighborNodeEstCost;
+                    neighborNode.estimateCost = neighborNodeEstCost;
 
                     if (!openList.Contains(neighborNode))
                         openList.Push(neighborNode);
