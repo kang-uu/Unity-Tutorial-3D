@@ -28,7 +28,42 @@ public class AStar
 
             if (node.pos == endNode.pos) // 목적지에 도착
                 return CalculatePath(node);
+
+            List<Node> neighbors = new List<Node>();
+            GridManager.Instance.GetNeighbors(node, neighbors);
+
+            for (int i = 0; i < neighbors.Count; i++)
+            {
+                Node neighborNode = neighbors[i];
+
+                if (!closedList.Contains(neighborNode))
+                {
+                    float cost = HeuristicEstimateCost(node, neighborNode);
+                    float totalCost = node.nodeTotalCost + cost;
+
+                    float neighborNodeEstCost = HeuristicEstimateCost(neighborNode, endNode);
+
+                    neighborNode.nodeTotalCost = totalCost;
+                    neighborNode.parent = node;
+                    neighborNode.estimateCost = totalCost + neighborNodeEstCost;
+
+                    if (!openList.Contains(neighborNode))
+                        openList.Push(neighborNode);
+                }
+            }
+
+            closedList.Push(node);
+            openList.Remove(node);
         }
+
+        if (node.pos != endNode.pos)
+        {
+            Debug.LogError("Destination Path Not Found");
+            
+            return null;
+        }
+
+        return CalculatePath(node);
     }
 
     private static List<Node> CalculatePath(Node node)

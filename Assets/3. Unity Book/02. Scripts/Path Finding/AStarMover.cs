@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AStarMover : MonoBehaviour
 {
-    public Transform startPos, endPos;
+    private Transform startPos, endPos;
     public Node startNode, endNode;
 
     public List<Node> pathList = new List<Node>();
@@ -29,7 +29,6 @@ public class AStarMover : MonoBehaviour
         int endRow = GridManager.Instance.GetRow(endIndex);
         int endCol = GridManager.Instance.GetColumn(endIndex);
         endNode = GridManager.Instance.nodes[endRow, endCol];
-
         
         // Start에서 End까지의 방문한 Node List
         pathList = AStar.FindPath(startNode, endNode);

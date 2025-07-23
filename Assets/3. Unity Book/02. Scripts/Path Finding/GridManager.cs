@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using NUnit.Framework;
 using UnityEngine;
 
 public class GridManager : Singleton<GridManager>
@@ -36,7 +35,7 @@ public class GridManager : Singleton<GridManager>
             {
                 Vector3 cellPos = GetGridCellCenter(index);
                 Node node = new Node(cellPos);
-                nodes[j, i] = node;
+                nodes[i, j] = node;
                 index++;
             }
         }
