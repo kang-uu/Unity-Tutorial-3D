@@ -19,7 +19,7 @@ public class GridManager : Singleton<GridManager>
     protected override void Awake()
     {
         base.Awake();
-        
+
         obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
         CalculateObstacles();
     }
@@ -29,9 +29,9 @@ public class GridManager : Singleton<GridManager>
         nodes = new Node[numOfRows, numOfColumns];
 
         int index = 0;
-        for (int i = 0; i < numOfColumns; i++)
+        for (int i = 0; i < numOfRows; i++)
         {
-            for (int j = 0; j < numOfRows; j++)
+            for (int j = 0; j < numOfColumns; j++)
             {
                 Vector3 cellPos = GetGridCellCenter(index);
                 Node node = new Node(cellPos);
@@ -108,23 +108,23 @@ public class GridManager : Singleton<GridManager>
         int nodeIndex = GetGridIndex(node.pos);
         int row = GetRow(nodeIndex);
         int col = GetColumn(nodeIndex);
-        
-        
+
+
         // 아래
         int leftNodeRow = row - 1;
         int leftNodeColumn = col;
         AssignNeighbor(leftNodeRow, leftNodeColumn, neighbors);
-        
+
         // 위
         leftNodeRow = row + 1;
         leftNodeColumn = col;
         AssignNeighbor(leftNodeRow, leftNodeColumn, neighbors);
-        
+
         // 오른쪽
         leftNodeRow = row;
         leftNodeColumn = col + 1;
         AssignNeighbor(leftNodeRow, leftNodeColumn, neighbors);
-        
+
         // 왼쪽
         leftNodeRow = row;
         leftNodeColumn = col - 1;
@@ -144,8 +144,16 @@ public class GridManager : Singleton<GridManager>
     void OnDrawGizmos()
     {
         DebugDrawGrid(transform.position, numOfRows, numOfColumns, gridCellSize, Color.blue);
+
+        // 장애물에 Cube 표시하는 기능
+        Vector3 cellSize = new Vector3(gridCellSize, 1f, gridCellSize);
+        if (obstacles != null && obstacles.Length > 0)
+        {
+            foreach (GameObject data in obstacles)
+                Gizmos.DrawCube(GetGridCellCenter(GetGridIndex(data.transform.position)), cellSize);
+        }
     }
-    
+
     public void DebugDrawGrid(Vector3 origin, int numRows, int numCols, float cellSize, Color color)
     {
         float width = numCols * cellSize;
