@@ -1,3 +1,5 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class FPSPlayerFire : MonoBehaviour
@@ -10,6 +12,9 @@ public class FPSPlayerFire : MonoBehaviour
     public GameObject bulletEffect;
     private Animator anim;
     private ParticleSystem ps;
+
+    public TextMeshProUGUI wModeText;
+    public GameObject[] eff_Flash;
 
     public float throwPower = 15f;
     public int weaponPower = 5;
@@ -33,6 +38,8 @@ public class FPSPlayerFire : MonoBehaviour
         {
             if (anim.GetFloat("MoveMotion") == 0)
                 anim.SetTrigger("Attack");
+
+            StartCoroutine(ShootEffectOn(0.05f));
             
             Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
             RaycastHit hitInfo =  new RaycastHit();
@@ -88,10 +95,23 @@ public class FPSPlayerFire : MonoBehaviour
         {
             wMode = WeaponMode.Normal;
             Camera.main.fieldOfView = 60f;
+
+            wModeText.text = "Normal Mode";
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             wMode = WeaponMode.Sniper;
+            
+            wModeText.text = "Sniper Mode";
         }
+    }
+
+    IEnumerator ShootEffectOn(float duration)
+    {
+        int num = Random.Range(0, eff_Flash.Length);
+        eff_Flash[num].SetActive(true);
+
+        yield return new WaitForSeconds(duration);
+        eff_Flash[num].SetActive(false);
     }
 }
