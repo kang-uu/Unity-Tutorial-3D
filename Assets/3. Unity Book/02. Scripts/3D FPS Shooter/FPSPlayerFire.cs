@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class FPSPlayerFire : MonoBehaviour
 {
+    private enum WeaponMode { Normal, Sniper }
+    private WeaponMode wMode;
+
     public GameObject firePosition;
     public GameObject bombFactory;
     public GameObject bulletEffect;
@@ -11,11 +14,14 @@ public class FPSPlayerFire : MonoBehaviour
     public float throwPower = 15f;
     public int weaponPower = 5;
 
+    private bool ZoomMode = false;
 
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
         ps = bulletEffect.GetComponent<ParticleSystem>();
+
+        wMode = WeaponMode.Normal;
     }
 
     void Update()
@@ -50,11 +56,42 @@ public class FPSPlayerFire : MonoBehaviour
         
         if (Input.GetMouseButtonDown(1)) // 마우스 오른쪽 버튼 클릭
         {
-            GameObject bomb = Instantiate(bombFactory);
-            bomb.transform.position = firePosition.transform.position;
+            switch (wMode)
+            {
+                case WeaponMode.Normal: // 일반 모드일 때 마우스 오른쪽 -> 수류탄 투척
+                    GameObject bomb = Instantiate(bombFactory);
+                    bomb.transform.position = firePosition.transform.position;
 
-            Rigidbody rb = bomb.GetComponent<Rigidbody>();
-            rb.AddForce(Camera.main.transform.forward * throwPower, ForceMode.Impulse);
+                    Rigidbody rb = bomb.GetComponent<Rigidbody>();
+                    rb.AddForce(Camera.main.transform.forward * throwPower, ForceMode.Impulse);
+                    break;
+                case WeaponMode.Sniper: // 저격 모드일 때 마우스 오른쪽 -> 확대/축소 조준경
+                    // if (!ZoomMode)
+                    // {
+                    //     Camera.main.fieldOfView = 15f;
+                    //     ZoomMode = true;
+                    // }
+                    // else
+                    // {
+                    //     Camera.main.fieldOfView = 60f;
+                    //     ZoomMode = false;
+                    // }
+
+                    float fov = ZoomMode ? 60f : 15f;
+                    Camera.main.fieldOfView = fov;
+                    ZoomMode = !ZoomMode;
+                    break;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            wMode = WeaponMode.Normal;
+            Camera.main.fieldOfView = 60f;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            wMode = WeaponMode.Sniper;
         }
     }
 }
