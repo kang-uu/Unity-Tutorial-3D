@@ -70,20 +70,10 @@ public class FPSPlayerFire : MonoBehaviour
                     bomb.transform.position = firePosition.transform.position;
 
                     Rigidbody rb = bomb.GetComponent<Rigidbody>();
-                    rb.AddForce(Camera.main.transform.forward * throwPower, ForceMode.Impulse);
+                    rb.AddForce((Camera.main.transform.forward + Camera.main.transform.up * 0.5f)
+                                * throwPower, ForceMode.Impulse);
                     break;
                 case WeaponMode.Sniper: // 저격 모드일 때 마우스 오른쪽 -> 확대/축소 조준경
-                    // if (!ZoomMode)
-                    // {
-                    //     Camera.main.fieldOfView = 15f;
-                    //     ZoomMode = true;
-                    // }
-                    // else
-                    // {
-                    //     Camera.main.fieldOfView = 60f;
-                    //     ZoomMode = false;
-                    // }
-
                     float fov = ZoomMode ? 60f : 15f;
                     Camera.main.fieldOfView = fov;
                     ZoomMode = !ZoomMode;
