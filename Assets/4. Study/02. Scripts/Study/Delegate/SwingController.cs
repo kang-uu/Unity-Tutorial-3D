@@ -36,10 +36,13 @@ public class SwingController : MonoBehaviour
         anim.SetTrigger("Swing");
         aciton1?.Invoke();
 
-        // float animLength = anim.GetCurrentAnimatorClipInfo(0).Length;
-        // float animLength2 = anim.GetCurrentAnimatorStateInfo(0).length;
-        yield return new WaitForSeconds(0.5f);
+        yield return null;
+        Debug.Log(anim.GetCurrentAnimatorClipInfo(0)[0].clip.length);
+        float animTime = anim.GetCurrentAnimatorClipInfo(0)[0].clip.length;
         
+        // float animTime2 = anim.GetCurrentAnimatorStateInfo(0).length;
+
+        yield return new WaitForSeconds(animTime);
         action2?.Invoke();
         isSwing = false;
     }
