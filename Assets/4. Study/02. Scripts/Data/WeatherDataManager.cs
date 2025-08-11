@@ -43,7 +43,7 @@ public class WeatherDataManager : MonoBehaviour
 
             Debug.Log(data); // JSON 파일
 
-            weatherData = JsonUtility.FromJson<WeatherData.Root>(data);
+            weatherData = JsonUtility.FromJson<WeatherData.Root>(data); // JSON 데이터 파싱
 
             foreach (var item in weatherData.response.body.items.item)
             {
