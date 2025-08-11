@@ -8,19 +8,17 @@ public class GoogleSheetManager : MonoBehaviour
 
     IEnumerator Start()
     {
-        UnityWebRequest www = UnityWebRequest.Get(URL); // 요청 전달
+        UnityWebRequest www = UnityWebRequest.Get(URL);
         yield return www.SendWebRequest();
 
         WWWForm form = new WWWForm();
         form.AddField("value", "123");
         
-        UnityWebRequest www2 = UnityWebRequest.Post(URL, form); // 요청 전달
+        UnityWebRequest www2 = UnityWebRequest.Post(URL, form);
         yield return www2.SendWebRequest();
 
-        string data = www.downloadHandler.text; // 요청 받은 것 : Get
-        // string data2 = www2.downloadHandler.text; // 요청 받은 것 : Post
+        string data = www.downloadHandler.text;
         
         Debug.Log(data);
-        // Debug.Log(data2);
     }
 }
